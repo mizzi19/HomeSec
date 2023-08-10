@@ -15,6 +15,16 @@ public class EventsUI extends JPanel {
         // Components for the events UI
         JButton addEventButton = new JButton("Add Event");
         JButton viewEventsButton = new JButton("View Events");
+        JButton backToMainMenuButton = new JButton("Back to Main Menu");
+
+        // Set preferred size for buttons
+        Dimension buttonSize = new Dimension(150, 40);
+        addEventButton.setPreferredSize(buttonSize);
+        viewEventsButton.setPreferredSize(buttonSize);
+        backToMainMenuButton.setPreferredSize(buttonSize);
+
+        // Set background color of "Back to Main Menu" button to red
+        backToMainMenuButton.setBackground(new Color(255, 100, 100));
 
         // Layout setup
         setLayout(new GridBagLayout());
@@ -27,6 +37,7 @@ public class EventsUI extends JPanel {
         // Add components to the panel
         add(addEventButton, gbc);
         add(viewEventsButton, gbc);
+        add(backToMainMenuButton, gbc);
 
         // Button action listeners
         addEventButton.addActionListener(new ActionListener() {
@@ -40,6 +51,13 @@ public class EventsUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showEventsView();
+            }
+        });
+
+        backToMainMenuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                navigateToMainMenu();
             }
         });
     }
@@ -72,9 +90,22 @@ public class EventsUI extends JPanel {
         }
 
         JList<String> eventsList = new JList<>(eventsListModel);
-        eventsFrame.getContentPane().add(new JScrollPane(eventsList));
+        JScrollPane scrollPane = new JScrollPane(eventsList);
+
+        // Center the events window on the screen
+        eventsFrame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
         eventsFrame.pack();
+        eventsFrame.setLocationRelativeTo(null); // Center the frame on the screen
         eventsFrame.setVisible(true);
+    }
+
+    // Method to navigate back to the main menu
+    private void navigateToMainMenu() {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(new MenuUI(logic));
+        frame.pack();
+        frame.revalidate();
     }
 }
