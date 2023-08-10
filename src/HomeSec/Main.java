@@ -8,6 +8,10 @@ public class Main {
             @Override
             public void run() {
                 ApplicationLogic logic = new ApplicationLogic();
+                logic.loadTasksFromFile();
+
+                // Set up the application logic shutdown hook
+                logic.setupShutdownHook();
 
                 LoginUI loginUI = new LoginUI(logic);
                 MenuUI menuUI = new MenuUI(logic);

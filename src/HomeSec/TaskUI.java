@@ -22,7 +22,10 @@ public class TaskUI extends JPanel {
         Dimension buttonSize = new Dimension(150, 40);
         addTaskButton.setPreferredSize(buttonSize);
         viewTasksButton.setPreferredSize(buttonSize);
+       
+        // Set background color of back to menu button to a red hue
         backToMenuButton.setPreferredSize(buttonSize);
+        backToMenuButton.setBackground(new Color(255, 100, 100)); // Red hue
 
         // Layout setup
         setLayout(new GridBagLayout());
@@ -70,7 +73,7 @@ public class TaskUI extends JPanel {
             JOptionPane.showMessageDialog(this, "Task added successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
 
             // Save tasks after adding
-            saveTasks();
+            logic.saveTasksToFile();
         }
     }
 

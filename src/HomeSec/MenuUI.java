@@ -14,6 +14,19 @@ public class MenuUI extends JPanel {
         // Components for the menu UI
         JButton tasksButton = new JButton("Tasks");
         JButton eventsButton = new JButton("Events");
+        JButton exitButton = new JButton("Exit");
+
+        // Set preferred size for buttons
+        Dimension buttonSize = new Dimension(150, 40);
+        tasksButton.setPreferredSize(buttonSize);
+        eventsButton.setPreferredSize(buttonSize);
+ 
+        
+                // Set background color of back to menu button to a red hue
+        exitButton.setPreferredSize(buttonSize);
+        exitButton.setBackground(new Color(255, 100, 100)); // Red hue
+
+ 
 
         // Layout setup
         setLayout(new GridBagLayout());
@@ -26,6 +39,7 @@ public class MenuUI extends JPanel {
         // Add components to the panel
         add(tasksButton, gbc);
         add(eventsButton, gbc);
+        add(exitButton, gbc);
 
         // Button action listeners
         tasksButton.addActionListener(new ActionListener() {
@@ -41,8 +55,13 @@ public class MenuUI extends JPanel {
                 navigateToEventsUI();
             }
         });
-        
-        
+
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exitApplication();
+            }
+        });
     }
 
     private void navigateToTaskUI() {
@@ -59,5 +78,12 @@ public class MenuUI extends JPanel {
         frame.getContentPane().add(new EventsUI(logic));
         frame.pack();
         frame.revalidate();
+    }
+
+    // Method to handle exiting the application
+    private void exitApplication() {
+        // Save tasks and perform other cleanup
+        logic.saveTasksToFile(); // Save tasks before exiting
+        System.exit(0); // Close the application
     }
 }

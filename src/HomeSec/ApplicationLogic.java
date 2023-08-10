@@ -42,16 +42,22 @@ public class ApplicationLogic {
     }
 
     // Method to save tasks to a file using object serialization
-    private void saveTasksToFile() {
+    void saveTasksToFile() {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(tasksFileName))) {
             outputStream.writeObject(tasks);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    
+        public void setupShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            saveTasksToFile(); // Save tasks to file
+        }));
+    }
 
     // Method to load tasks from a file using object deserialization
-    private void loadTasksFromFile() {
+    void loadTasksFromFile() {
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(tasksFileName))) {
             tasks = (List<Task>) inputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
